@@ -27,9 +27,13 @@ jobs:
       run: dotnet restore
     - name: Debug dependencies
       run: |
-        dpkg -l | grep glfw
-        dpkg -l | grep x11
-        dpkg -l | grep mesa
+        dpkg -l | grep glfw || true
+        dpkg -l | grep x11 || true
+        dpkg -l | grep mesa || true
+        ps aux | grep Xvfb
+        echo $DISPLAY
+        dotnet --info
+        dotnet tool list --global
     - name: Build
       run: dotnet build --no-restore
     - name: Test
@@ -52,10 +56,13 @@ jobs:
       run: dotnet restore
     - name: Debug dependencies
       run: |
-        dpkg -l | grep glfw
-        dpkg -l | grep x11
-        dpkg -l | grep mesa
+        dpkg -l | grep glfw || true
+        dpkg -l | grep x11 || true
+        dpkg -l | grep mesa || true
+        ps aux | grep Xvfb
         echo $DISPLAY
+        dotnet --info
+        dotnet tool list --global
     - name: Build
       run: dotnet build --no-restore
     - name: Test
