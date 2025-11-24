@@ -25,6 +25,11 @@ jobs:
         dotnet-version: 8.0.119
     - name: Restore dependencies
       run: dotnet restore
+    - name: Debug dependencies
+      run: |
+        dpkg -l | grep glfw
+        dpkg -l | grep x11
+        dpkg -l | grep mesa
     - name: Build
       run: dotnet build --no-restore
     - name: Test
@@ -45,6 +50,12 @@ jobs:
         dotnet-version: 8.0.119
     - name: Restore dependencies
       run: dotnet restore
+    - name: Debug dependencies
+      run: |
+        dpkg -l | grep glfw
+        dpkg -l | grep x11
+        dpkg -l | grep mesa
+        echo $DISPLAY
     - name: Build
       run: dotnet build --no-restore
     - name: Test
