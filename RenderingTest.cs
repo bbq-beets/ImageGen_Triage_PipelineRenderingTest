@@ -42,6 +42,11 @@ namespace PipelineRenderingTest
         [TestMethod]
         public void RenderTestWindow()
         {
+            foreach (var platform in Window.Platforms)
+            {
+                Console.WriteLine(platform.GetType().Name);
+            }
+        
             var options = WindowOptions.Default with
                                         {
                                             Size = new Vector2D<int>(800, 600),
@@ -57,3 +62,4 @@ namespace PipelineRenderingTest
         }
     }
 }
+
