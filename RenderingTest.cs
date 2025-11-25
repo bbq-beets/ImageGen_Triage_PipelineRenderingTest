@@ -40,7 +40,7 @@ namespace PipelineRenderingTest
         }
 
         [TestMethod]
-        public void RenderLiostPlatforms()
+        public void RenderListPlatforms()
         {
             string allPlatforms = "All platforms: ";
             foreach (var platform in Window.Platforms)
@@ -54,16 +54,22 @@ namespace PipelineRenderingTest
         [TestMethod]
         public void RenderTestWindow()
         {
-            string allPlatforms = "All platforms: ";
-            foreach (var platform in Window.Platforms)
-            {
-                allPlatforms += platform.GetType().Name + ", ";
-            }
+            var options = WindowOptions.Default with
+                                        {
+                                            Size = new Vector2D<int>(800, 600),
+                                            Title = "My first Silk.NET application!"
+                                        };
 
-            throw new Exception(allPlatforms);
+            var window = Window.Create(options);
+            window.Render += (_) =>
+            {
+                window.Close();
+            };
+            window.Run();
         }
     }
 }
+
 
 
 
