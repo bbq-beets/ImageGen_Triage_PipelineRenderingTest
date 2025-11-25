@@ -20,9 +20,8 @@ jobs:
     - run: |
         apt list --installed
     - run: |
-        glxinfo || true
-    - run: |
-        sudo apt install -y libglfw3
+        # sudo apt install -y libglfw3
+        sudo apt install -y libx11-6 libx11-data libx11-dev libx11-xcb1 x11-common x11-xkb-utils x11proto-dev
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
