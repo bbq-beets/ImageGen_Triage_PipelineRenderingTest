@@ -44,6 +44,8 @@ jobs:
         cat /usr/share/glvnd/egl_vendor.d/* 2>/dev/null || true
         ps -e | grep -E 'Xorg|Xwayland|Xvfb' || true
         xdpyinfo 2>/dev/null || true
+    - name: Fix
+      run: sudo apt-get update && sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
     - name: Build
       run: dotnet build --no-restore
     - name: Test
