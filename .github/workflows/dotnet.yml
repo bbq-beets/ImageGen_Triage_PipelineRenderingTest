@@ -82,6 +82,6 @@ jobs:
         ps -e | grep -E 'Xorg|Xwayland|Xvfb' || true
         xdpyinfo 2>/dev/null || true
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore; find ~/.nuget/packages -type f -iname "libglfw*" | head -n 20 || true
     - name: Test
       run: dotnet test --no-build --verbosity normal
