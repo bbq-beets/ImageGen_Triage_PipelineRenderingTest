@@ -30,13 +30,16 @@ jobs:
         dpkg -l | grep glfw || true
         dpkg -l | grep x11 || true
         dpkg -l | grep mesa || true
-        glxinfo | head || true
         ps aux | grep Xvfb
         echo $DISPLAY
         dotnet --info
         dotnet tool list --global
     - name: Fix
-      run: sudo apt-get install -y xvfb mesa-utils && Xvfb :10 -screen 0 1024x768x24
+      run: echo "Testing Mesa driver override"
+      env:
+        MESA_LOADER_DRIVER_OVERRIDE: llvmpipe
+        LIBGL_ALWAYS_SOFTWARE: 1
+        MESA_NO_ERROR: 1
     - name: Build
       run: dotnet build --no-restore
     - name: Test
@@ -62,7 +65,6 @@ jobs:
         dpkg -l | grep glfw || true
         dpkg -l | grep x11 || true
         dpkg -l | grep mesa || true
-        glxinfo | head || true
         ps aux | grep Xvfb
         echo $DISPLAY
         dotnet --info
