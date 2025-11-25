@@ -42,6 +42,28 @@ namespace PipelineRenderingTest
         [TestMethod]
         public void RenderTestWindow()
         {
+            foreach (var p in Window.Platforms)
+                Console.WriteLine($"{p.GetType().Name} | Applicable={p.IsApplicable}");
+            
+            Console.WriteLine($"Selected={Window.GetWindowPlatform()?.GetType().Name}");
+            
+            Console.WriteLine($"DISPLAY={Environment.GetEnvironmentVariable("DISPLAY")}");
+            Console.WriteLine($"LD_LIBRARY_PATH={Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}");
+            
+            try
+            {
+                NativeLibrary.Load("libglfw.so.3");
+                Console.WriteLine("dlopen OK");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"dlopen FAIL: {ex.Message}");
+            }
+            
+            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string nuget = Path.Combine(home, ".nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native/libglfw.so.3");
+            Console.WriteLine($"Exists={File.Exists(nuget)}: {nuget}");
+
             var options = WindowOptions.Default with
                                         {
                                             Size = new Vector2D<int>(800, 600),
@@ -57,3 +79,4 @@ namespace PipelineRenderingTest
         }
     }
 }
+
