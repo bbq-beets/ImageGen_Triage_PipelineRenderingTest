@@ -21,6 +21,7 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
+        echo $LD_LIBRARY_PATH
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -47,6 +48,7 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
+        echo $LD_LIBRARY_PATH
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
