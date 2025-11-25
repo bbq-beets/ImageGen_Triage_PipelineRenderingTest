@@ -23,6 +23,12 @@ jobs:
         # sudo apt install -y libglfw3
         dotnet --info | grep RID || true
     - run: |
+        cat << EOF > /etc/apt/preferences.d/dotnet
+        Package: *net*
+        Pin: origin packages.microsoft.com
+        Pin-Priority: 1001
+        EOF
+        sudo apt-get update
         sudo apt install -y dotnet-sdk-8.0
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
