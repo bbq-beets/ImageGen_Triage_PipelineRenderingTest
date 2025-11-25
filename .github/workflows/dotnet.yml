@@ -11,12 +11,11 @@ on:
 
 jobs:
   build_24_04:
-    # its latest but my brain needs it
     runs-on: ubuntu-24.04
-
     env:
       DISPLAY: :10
-      
+      MESA_LOADER_DRIVER_OVERRIDE: llvmpipe
+      LIBGL_ALWAYS_SOFTWARE: 1
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -49,8 +48,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: export MESA_LOADER_DRIVER_OVERRIDE=llvmpipe; export LIBGL_ALWAYS_SOFTWARE=1; dotnet test --no-build --verbosity normal
-
+      run: dotnet test --no-build --verbosity normal
 
   build_22_04:
 
