@@ -43,7 +43,15 @@ jobs:
         ps -e | grep -E 'Xorg|Xwayland|Xvfb' || true
         xdpyinfo 2>/dev/null || true
     - name: Build
-      run: dotnet build --no-restore; find ~/.nuget/packages -type f -iname "libglfw*" | head -n 20 || true; dotnet list package --include-transitive
+      run: |
+        dotnet build --no-restore
+        find ~/.nuget/packages -type f -iname "libglfw*" | head -n 20 || true
+        dotnet list package --include-transitive
+        find ~/.nuget/packages -type f -iname "libglfw*.so*" \
+          -exec echo ">>> {}" \; \
+          -exec ldd {} \; || true
+        find ~/.nuget/packages -type f -iname "libglfw*.so*" \
+          -exec objdump -p {} \; | grep -E "NEEDED" || true
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
@@ -82,6 +90,14 @@ jobs:
         ps -e | grep -E 'Xorg|Xwayland|Xvfb' || true
         xdpyinfo 2>/dev/null || true
     - name: Build
-      run: dotnet build --no-restore; find ~/.nuget/packages -type f -iname "libglfw*" | head -n 20 || true; dotnet list package --include-transitive
+      run: |
+        dotnet build --no-restore
+        find ~/.nuget/packages -type f -iname "libglfw*" | head -n 20 || true
+        dotnet list package --include-transitive
+        find ~/.nuget/packages -type f -iname "libglfw*.so*" \
+          -exec echo ">>> {}" \; \
+          -exec ldd {} \; || true
+        find ~/.nuget/packages -type f -iname "libglfw*.so*" \
+          -exec objdump -p {} \; | grep -E "NEEDED" || true
     - name: Test
       run: dotnet test --no-build --verbosity normal
