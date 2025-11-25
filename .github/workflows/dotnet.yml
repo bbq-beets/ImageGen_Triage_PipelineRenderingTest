@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: |
-        apt list -a libglfw3 || true
+        apt list libglfw3 || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -40,7 +40,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: |
-        apt list -a libglfw3 || true
+        apt list libglfw3 || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
