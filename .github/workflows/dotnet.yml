@@ -47,9 +47,6 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
-    - run: |
-        ls /usr/lib | grep glfw || true
-        ls /usr/lib/x86_64-linux-gnu | grep glfw || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -59,4 +56,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build -v d
+      run: dotnet test --no-build --verbosity normal
