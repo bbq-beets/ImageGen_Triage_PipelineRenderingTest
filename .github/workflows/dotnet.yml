@@ -62,6 +62,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - run: |
-        ls -la bin
+        find bin -name "*" || true
     - name: Test
       run: dotnet test --no-build
