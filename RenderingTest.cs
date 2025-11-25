@@ -49,21 +49,9 @@ namespace PipelineRenderingTest
             }
 
             throw new Exception(allPlatforms);
-        
-            var options = WindowOptions.Default with
-                                        {
-                                            Size = new Vector2D<int>(800, 600),
-                                            Title = "My first Silk.NET application!"
-                                        };
-
-            var window = Window.Create(options);
-            window.Render += (_) =>
-            {
-                window.Close();
-            };
-            window.Run();
         }
     }
 }
+
 
 
