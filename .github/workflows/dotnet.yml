@@ -22,6 +22,8 @@ jobs:
     - run: |
         # sudo apt install -y libglfw3
         dotnet --info | grep RID || true
+    - run: |
+        sudo apt install -y dotnet-sdk-8.0
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -30,19 +32,14 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - run: |
-        find bin -name "*" || true
     - name: Test
       run: |
         dotnet test --no-build --verbosity normal
       
   build_22_04:
-
     runs-on: ubuntu-22.04
-
     env:
       DISPLAY: :10
-      
     steps:
     - uses: actions/checkout@v4
     - run: |
@@ -56,15 +53,7 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - run: |
-        find /home/runner/.nuget/packages/ultz.native.glfw -name "libglfw.so.3"  || true
-    - run: |
-        find /lib -name "libglfw.so.3" || true
     - name: Build
       run: dotnet build --no-restore
-    - run: |
-        find bin -name "*" || true
-    - run: |
-        strace -e openat dotnet run 2>&1 | grep libglfw
     - name: Test
       run: dotnet test --no-build
