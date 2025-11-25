@@ -40,6 +40,18 @@ namespace PipelineRenderingTest
         }
 
         [TestMethod]
+        public void RenderLiostPlatforms()
+        {
+            string allPlatforms = "All platforms: ";
+            foreach (var platform in Window.Platforms)
+            {
+                allPlatforms += platform.GetType().Name + ", ";
+            }
+
+            throw new Exception(allPlatforms);
+        }
+
+        [TestMethod]
         public void RenderTestWindow()
         {
             string allPlatforms = "All platforms: ";
@@ -52,6 +64,7 @@ namespace PipelineRenderingTest
         }
     }
 }
+
 
 
 
