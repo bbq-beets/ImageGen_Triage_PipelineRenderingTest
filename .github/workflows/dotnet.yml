@@ -60,6 +60,6 @@ jobs:
     - run: |
         find /lib -name "libglfw.so.3" || true
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --verbosity diagnostic
     - name: Test
       run: dotnet test --no-build --verbosity diagnostic
