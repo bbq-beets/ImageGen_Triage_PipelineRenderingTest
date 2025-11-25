@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace PipelineRenderingTest
@@ -22,7 +22,12 @@ namespace PipelineRenderingTest
                     throw new InvalidOperationException($"DISPLAY environment variable is required by Xvfb for running tests under Linux.");
                 }
 
-                var info = new ProcessStartInfo { FileName = "/usr/bin/Xvfb", Arguments = $"{display} -ac -screen 0 1024x768x24", CreateNoWindow = true, };
+                var info = new ProcessStartInfo
+                {
+                    FileName = "/usr/bin/Xvfb",
+                    Arguments = $"{display} -ac -screen 0 1024x768x24",
+                    CreateNoWindow = true,
+                };
                 xvfb = new Process();
                 xvfb.StartInfo = info;
                 xvfb.Start();
@@ -42,33 +47,37 @@ namespace PipelineRenderingTest
         [TestMethod]
         public void RenderTestWindow()
         {
+            // debug
+            Console.WriteLine("=== Silk.NET Diagnostics ===");
+
             foreach (var p in Window.Platforms)
-                Console.WriteLine($"{p.GetType().Name} | Applicable={p.IsApplicable}");
-            
-            Console.WriteLine($"Selected={Window.GetWindowPlatform()?.GetType().Name}");
-            
+                Console.WriteLine($"Platform={p.GetType().Name}, Applicable={p.IsApplicable}");
+
+            Console.WriteLine($"Selected={Window.GetWindowPlatform(viewOnly: true)?.GetType().Name}");
+
             Console.WriteLine($"DISPLAY={Environment.GetEnvironmentVariable("DISPLAY")}");
             Console.WriteLine($"LD_LIBRARY_PATH={Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}");
-            
+
             try
             {
                 NativeLibrary.Load("libglfw.so.3");
-                Console.WriteLine("dlopen OK");
+                Console.WriteLine("dlopen(libglfw.so.3) OK");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"dlopen FAIL: {ex.Message}");
+                Console.WriteLine("dlopen(libglfw.so.3) FAILED: " + ex.Message);
             }
-            
-            string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string nuget = Path.Combine(home, ".nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native/libglfw.so.3");
-            Console.WriteLine($"Exists={File.Exists(nuget)}: {nuget}");
 
+            var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var nuget = Path.Combine(home, ".nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native/libglfw.so.3");
+            Console.WriteLine($"NuGet libglfw exists={File.Exists(nuget)}: {nuget}");
+
+            // test
             var options = WindowOptions.Default with
-                                        {
-                                            Size = new Vector2D<int>(800, 600),
-                                            Title = "My first Silk.NET application!"
-                                        };
+            {
+                Size = new Vector2D<int>(800, 600),
+                Title = "My first Silk.NET application!"
+            };
 
             var window = Window.Create(options);
             window.Render += (_) =>
@@ -79,4 +88,3 @@ namespace PipelineRenderingTest
         }
     }
 }
-
