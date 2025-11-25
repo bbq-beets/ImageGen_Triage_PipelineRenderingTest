@@ -22,7 +22,8 @@ jobs:
     - run: |
         # sudo apt install -y libglfw3
     - run: |
-        pkg-config --exists glfw3
+        ls /usr/lib | grep glfw || true
+        ls /usr/lib/x86_64-linux-gnu | grep glfw || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -48,7 +49,8 @@ jobs:
     - run: |
         # sudo apt install -y libglfw3
     - run: |
-        pkg-config --exists glfw3
+        ls /usr/lib | grep glfw || true
+        ls /usr/lib/x86_64-linux-gnu | grep glfw || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
