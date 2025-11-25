@@ -48,13 +48,10 @@ namespace PipelineRenderingTest
         public void RenderTestWindow()
         {
             // debug
-            Console.WriteLine("=== Silk.NET Diagnostics ===");
-
             foreach (var p in Window.Platforms)
                 Console.WriteLine($"Platform={p.GetType().Name}, Applicable={p.IsApplicable}");
 
             Console.WriteLine($"Selected={Window.GetWindowPlatform(viewOnly: true)?.GetType().Name}");
-
             Console.WriteLine($"DISPLAY={Environment.GetEnvironmentVariable("DISPLAY")}");
             Console.WriteLine($"LD_LIBRARY_PATH={Environment.GetEnvironmentVariable("LD_LIBRARY_PATH")}");
 
@@ -88,3 +85,4 @@ namespace PipelineRenderingTest
         }
     }
 }
+
