@@ -55,38 +55,8 @@ jobs:
         find ~/.nuget/packages -type f -iname "libglfw*.so*" \
           -exec objdump -p {} \; | grep -E "NEEDED" || true
 
-        # ---- dlopen test (correct indentation) ----
-        cat << 'EOF' > check_dl.c
-#include <dlfcn.h>
-#include <stdio.h>
-
-int main() {
-    const char* lib = "libglfw.so.3";
-    void* handle = dlopen(lib, RTLD_NOW);
-    if (!handle) {
-        printf("dlopen FAILED: %s\n", dlerror());
-        return 1;
-    }
-
-    Dl_info info;
-    if (dladdr(handle, &info)) {
-        printf("dlopen SUCCESS: resolved to: %s\n", info.dli_fname);
-    } else {
-        printf("dlopen SUCCESS: BUT could not get path via dladdr\n");
-    }
-
-    return 0;
-}
-EOF
-
-        gcc check_dl.c -ldl -o check_dl
-
-        echo "=== Test 1: no LD_LIBRARY_PATH ==="
-        ./check_dl || true
-
-        echo "=== Test 2: add NuGet GLFW path ==="
-        export LD_LIBRARY_PATH=$HOME/.nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native
-        ./check_dl || true
+        chmod +x .github/workflows/check_dl.sh
+        .github/workflows/check_dl.sh
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
@@ -137,37 +107,7 @@ EOF
         find ~/.nuget/packages -type f -iname "libglfw*.so*" \
           -exec objdump -p {} \; | grep -E "NEEDED" || true
 
-        # ---- dlopen test (correct indentation) ----
-        cat << 'EOF' > check_dl.c
-#include <dlfcn.h>
-#include <stdio.h>
-
-int main() {
-    const char* lib = "libglfw.so.3";
-    void* handle = dlopen(lib, RTLD_NOW);
-    if (!handle) {
-        printf("dlopen FAILED: %s\n", dlerror());
-        return 1;
-    }
-
-    Dl_info info;
-    if (dladdr(handle, &info)) {
-        printf("dlopen SUCCESS: resolved to: %s\n", info.dli_fname);
-    } else {
-        printf("dlopen SUCCESS: BUT could not get path via dladdr\n");
-    }
-
-    return 0;
-}
-EOF
-
-        gcc check_dl.c -ldl -o check_dl
-
-        echo "=== Test 1: no LD_LIBRARY_PATH ==="
-        ./check_dl || true
-
-        echo "=== Test 2: add NuGet GLFW path ==="
-        export LD_LIBRARY_PATH=$HOME/.nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native
-        ./check_dl || true
+        chmod +x .github/workflows/check_dl.sh
+        .github/workflows/check_dl.sh
     - name: Test
       run: dotnet test --no-build --verbosity normal
