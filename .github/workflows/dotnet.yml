@@ -23,6 +23,7 @@ jobs:
         # sudo apt install -y libglfw3
         dotnet --info | grep RID || true
     - run: |
+        sudo chmod -R 777 /etc/apt/preferences.d
         cat << EOF > /etc/apt/preferences.d/dotnet
         Package: *net*
         Pin: origin packages.microsoft.com
