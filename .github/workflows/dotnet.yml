@@ -35,6 +35,8 @@ jobs:
         echo $DISPLAY
         dotnet --info
         dotnet tool list --global
+    - name: Fix
+      run: sudo apt-get install -y xvfb mesa-utils && Xvfb :10 -screen 0 1024x768x24
     - name: Build
       run: dotnet build --no-restore
     - name: Test
