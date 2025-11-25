@@ -47,8 +47,9 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
-      
+      run: export MESA_LOADER_DRIVER_OVERRIDE=llvmpipe; export LIBGL_ALWAYS_SOFTWARE=1; dotnet test --no-build --verbosity normal
+
+
   build_22_04:
 
     runs-on: ubuntu-22.04
