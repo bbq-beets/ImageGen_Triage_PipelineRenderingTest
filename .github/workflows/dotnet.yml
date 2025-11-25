@@ -21,7 +21,7 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
-        echo $LD_LIBRARY_PATH
+        dotnet --info | grep RID || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -49,7 +49,7 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
-        
+        dotnet --info | grep RID || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -64,5 +64,7 @@ jobs:
       run: dotnet build --no-restore
     - run: |
         find bin -name "*" || true
+    - run: |
+        strace -e openat dotnet run 2>&1 | grep libglfw
     - name: Test
       run: dotnet test --no-build
