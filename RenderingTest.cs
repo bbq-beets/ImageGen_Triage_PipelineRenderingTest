@@ -42,10 +42,13 @@ namespace PipelineRenderingTest
         [TestMethod]
         public void RenderTestWindow()
         {
+            string allPlatforms = "All platforms: ";
             foreach (var platform in Window.Platforms)
             {
-                Console.WriteLine(platform.GetType().Name);
+                allPlatforms += platform.GetType().Name + ", ";
             }
+
+            throw new Exception(allPlatforms);
         
             var options = WindowOptions.Default with
                                         {
@@ -62,4 +65,5 @@ namespace PipelineRenderingTest
         }
     }
 }
+
 
