@@ -48,7 +48,17 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
-        echo $LD_LIBRARY_PATH
+    - run: |
+        find /home/runner/.nuget/packages/ultz.native.glfw -name "libglfw.so.3"
+    - run: |
+        find /lib -name "libglfw.so.3"
+        find /usr/lib -name "libglfw.so.3"
+        find /lib/x86_64-linux-gnu -name "libglfw.so.3"
+        find /usr/lib/x86_64-linux-gnu -name "libglfw.so.3"
+        find /usr/local/lib -name "libglfw.so.3"
+    - run: |
+        sudo cat /etc/ld.so.conf
+        
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
