@@ -59,12 +59,8 @@ jobs:
         find /home/runner/.nuget/packages/ultz.native.glfw -name "libglfw.so.3"  || true
     - run: |
         find /lib -name "libglfw.so.3" || true
-        find /usr/lib -name "libglfw.so.3" || true
-        find /lib/x86_64-linux-gnu -name "libglfw.so.3" || true
-        find /usr/lib/x86_64-linux-gnu -name "libglfw.so.3" || true
-        find /usr/local/lib -name "libglfw.so.3" || true
     - run: |
-        sudo cat /etc/ld.so.conf || true
+        rm -rf /home/runner/.nuget/packages/ultz.native.glfw/3.4.0/runtimes
     - name: Build
       run: dotnet build --no-restore
     - name: Test
