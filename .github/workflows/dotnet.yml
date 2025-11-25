@@ -30,6 +30,7 @@ jobs:
         dpkg -l | grep glfw || true
         dpkg -l | grep x11 || true
         dpkg -l | grep mesa || true
+        glxinfo | head || true
         ps aux | grep Xvfb
         echo $DISPLAY
         dotnet --info
@@ -59,6 +60,7 @@ jobs:
         dpkg -l | grep glfw || true
         dpkg -l | grep x11 || true
         dpkg -l | grep mesa || true
+        glxinfo | head || true
         ps aux | grep Xvfb
         echo $DISPLAY
         dotnet --info
