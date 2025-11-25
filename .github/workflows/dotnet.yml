@@ -34,12 +34,16 @@ jobs:
         echo $DISPLAY
         dotnet --info
         dotnet tool list --global
-    - name: Fix
-      run: echo "Testing Mesa driver override"
-      env:
-        MESA_LOADER_DRIVER_OVERRIDE: llvmpipe
-        LIBGL_ALWAYS_SOFTWARE: 1
-        MESA_NO_ERROR: 1
+    - name: Debug GL
+      run: |
+        printenv | grep -Ei 'mesa|gl|vk' || true
+        ls -l /usr/lib/x86_64-linux-gnu/dri/ || true
+        ldconfig -p | grep -Ei 'libGL|libEGL' || true
+        ls -l /usr/share/vulkan/icd.d/ || true
+        ls -l /etc/vulkan/icd.d/ || true
+        cat /usr/share/glvnd/egl_vendor.d/* 2>/dev/null || true
+        ps -e | grep -E 'Xorg|Xwayland|Xvfb' || true
+        xdpyinfo 2>/dev/null || true
     - name: Build
       run: dotnet build --no-restore
     - name: Test
@@ -69,6 +73,16 @@ jobs:
         echo $DISPLAY
         dotnet --info
         dotnet tool list --global
+    - name: Debug GL
+      run: |
+        printenv | grep -Ei 'mesa|gl|vk' || true
+        ls -l /usr/lib/x86_64-linux-gnu/dri/ || true
+        ldconfig -p | grep -Ei 'libGL|libEGL' || true
+        ls -l /usr/share/vulkan/icd.d/ || true
+        ls -l /etc/vulkan/icd.d/ || true
+        cat /usr/share/glvnd/egl_vendor.d/* 2>/dev/null || true
+        ps -e | grep -E 'Xorg|Xwayland|Xvfb' || true
+        xdpyinfo 2>/dev/null || true
     - name: Build
       run: dotnet build --no-restore
     - name: Test
