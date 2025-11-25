@@ -44,7 +44,12 @@ jobs:
         ps -e | grep -E 'Xorg|Xwayland|Xvfb' || true
         xdpyinfo 2>/dev/null || true
     - name: Fix
-      run: sudo apt-get update && sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb mesa-utils \
+          libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+        Xvfb :10 -screen 0 1024x768x24 &
+        sleep 1
     - name: Build
       run: dotnet build --no-restore
     - name: Test
