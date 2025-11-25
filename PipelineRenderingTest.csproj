@@ -10,7 +10,9 @@
       For more information, visit https://learn.microsoft.com/dotnet/core/testing/unit-testing-platform-integration-dotnet-test#show-failure-per-test
       -->
     <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
-    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <!--
+      <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,4 +22,5 @@
   </ItemGroup>
 
 </Project>
+
 
