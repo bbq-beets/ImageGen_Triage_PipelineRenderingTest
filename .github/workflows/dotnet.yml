@@ -21,6 +21,9 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
+    - run: |
+        gcc glfw-test.c -lglfw -o glfw-test
+        ./glfw-test
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -44,7 +47,10 @@ jobs:
     - run: |
         apt list --installed
     - run: |
-        sudo apt install -y libglfw3
+        # sudo apt install -y libglfw3
+    - run: |
+        gcc glfw-test.c -lglfw -o glfw-test
+        ./glfw-test
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
