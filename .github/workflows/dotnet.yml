@@ -21,9 +21,6 @@ jobs:
         apt list --installed
     - run: |
         # sudo apt install -y libglfw3
-    - run: |
-        ls /usr/lib | grep glfw || true
-        ls /usr/lib/x86_64-linux-gnu | grep glfw || true
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -33,7 +30,9 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        export LD_LIBRARY_PATH=/home/runner/.nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native:$LD_LIBRARY_PATH
+        dotnet test --no-build --verbosity normal
       
   build_22_04:
 
