@@ -30,9 +30,10 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - run: |
+        find bin -name "*" || true
     - name: Test
       run: |
-        export LD_LIBRARY_PATH=/home/runner/.nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native:$LD_LIBRARY_PATH
         dotnet test --no-build --verbosity normal
       
   build_22_04:
