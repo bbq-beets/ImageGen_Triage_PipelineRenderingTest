@@ -1,18 +1,17 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Silk.NET.Maths;
+using Silk.NET.Windowing;
 
 namespace PipelineRenderingTest
 {
-    using Silk.NET.Maths;
-    using Silk.NET.Windowing;
-
     [TestClass]
     public sealed class RenderingTest
     {
         private static Process? xvfb;
 
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
+        [AssemblyInitialize]
+        public static void AssemblyInitialize(TestContext c)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
@@ -26,28 +25,46 @@ namespace PipelineRenderingTest
                 {
                     FileName = "/usr/bin/Xvfb",
                     Arguments = $"{display} -ac -screen 0 1024x768x24",
-                    CreateNoWindow = true,
+                    CreateNoWindow = true
                 };
+
                 xvfb = new Process();
                 xvfb.StartInfo = info;
                 xvfb.Start();
             }
         }
 
-        [ClassCleanup]
-        public static void ClassCleanup()
+        [AssemblyCleanup]
+        public static void AssemblyCleanup()
         {
             if (xvfb != null)
             {
-                xvfb?.Kill();
-                xvfb?.Dispose();
+                xvfb.Kill();
+                xvfb.Dispose();
             }
         }
 
         [TestMethod]
         public void RenderTestWindow()
         {
-            // debug
+            RenderDebug.Dump();
+
+            var options = WindowOptions.Default with
+            {
+                Size = new Vector2D<int>(800, 600),
+                Title = "My first Silk.NET application!"
+            };
+
+            var window = Window.Create(options);
+            window.Render += _ => { window.Close(); };
+            window.Run();
+        }
+    }
+
+    internal static class RenderDebug
+    {
+        public static void Dump()
+        {
             foreach (var p in Window.Platforms)
                 Console.WriteLine($"Platform={p.GetType().Name}, Applicable={p.IsApplicable}");
 
@@ -68,21 +85,6 @@ namespace PipelineRenderingTest
             var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var nuget = Path.Combine(home, ".nuget/packages/ultz.native.glfw/3.4.0/runtimes/linux-x64/native/libglfw.so.3");
             Console.WriteLine($"NuGet libglfw exists={File.Exists(nuget)}: {nuget}");
-
-            // test
-            var options = WindowOptions.Default with
-            {
-                Size = new Vector2D<int>(800, 600),
-                Title = "My first Silk.NET application!"
-            };
-
-            var window = Window.Create(options);
-            window.Render += (_) =>
-            {
-                window.Close();
-            };
-            window.Run();
         }
     }
 }
-
