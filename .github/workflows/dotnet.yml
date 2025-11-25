@@ -58,7 +58,7 @@ jobs:
         chmod +x .github/workflows/check_dl.sh
         .github/workflows/check_dl.sh
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --logger:"console;verbosity=detailed"
 
   build_22_04:
 
@@ -110,4 +110,4 @@ jobs:
         chmod +x .github/workflows/check_dl.sh
         .github/workflows/check_dl.sh
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --logger:"console;verbosity=detailed"
