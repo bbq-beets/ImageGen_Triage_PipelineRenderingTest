@@ -39,6 +39,7 @@ namespace PipelineRenderingTest
             }
         }
 
+        /*
         [TestMethod]
         public void RenderListPlatforms()
         {
@@ -50,6 +51,7 @@ namespace PipelineRenderingTest
 
             throw new Exception(allPlatforms);
         }
+        */
 
         [TestMethod]
         public void RenderTestWindow()
@@ -69,6 +71,7 @@ namespace PipelineRenderingTest
         }
     }
 }
+
 
 
 
